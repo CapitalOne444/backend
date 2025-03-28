@@ -2,7 +2,7 @@ const express = require("express")
 const User = require("../modals/User")
 const router = express.Router()
 
-router.post('/', (req, res)=>{
+router.post('/user', (req, res)=>{
    const newUser = new User(req.body)
    newUser.save()
    res.send("User Created Successfully!")
