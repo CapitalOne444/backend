@@ -1,5 +1,5 @@
 const express = require("express")
-const Withdarwal = require("../modals/Withdarwal")
+const Withdarwal = require('../modals/Withdrawal')
 const router = express.Router()
 
 router.post('/withdarwal',async (req, res)=>{

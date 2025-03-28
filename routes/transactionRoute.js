@@ -1,5 +1,5 @@
 const express = require("express")
-const Transaction = require("../modals/Transaction")
+const Transaction = require('../modals/Transaction')
 const router = express.Router()
 
 router.post('/transaction',async (req, res)=>{
