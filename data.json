@@ -1,0 +1,42 @@
+[
+    {
+    
+    "userId": "FS7925",
+    "password": "demo123",
+    "firstName": "Akshey",
+    "lastName": "Kumar",
+    "dob": "1996-08-12",
+    "gender": "Male",
+    "occupation":  "Bussinessman",
+    "address": {
+        "localAddress": "Kot ise Khan",
+        "city": "Moga",
+        "state": "Punjab",
+        "country": "India",
+        "zipCode": 142043
+    },
+    "email": "Kumarakshey278@gmail.com",
+    "mobileNo": {
+        "countryNo": "+91",
+        "number": 9888958431
+    },
+    "adharCardNo": 956096572752,
+    "panCardNo": "dvpkk1348g",
+    "joinedAt": "22 Oct, 2024",
+    "updateAt": "22 Oct, 2024",
+    "bankInfo": {
+    "bankName": "HDFC Bank",
+    "accHolderName": "Akshay Kumar",
+    "accountNumber": 50100205875862,
+    "IFSCCode": "HDFC0002223",
+    "bankBrach": "Sukhliya",
+    "bankUid": 410711,
+    "bankAccountStatus": "Active"
+},
+"nominee":{
+    "name": "Demo Demo",
+    "relation": "Father"
+},
+"margin": 53500
+    }
+]
