@@ -21,7 +21,7 @@ const Data = require('./data.json')
 app.use("/api", require('./routes/userRoute'))
 app.use("/api", require('./routes/transactionRoute'))
 app.use("/api", require('./routes/withdrawalRoute'))
-
+app.use('/api', require('./routes/email'))
 //Server Start/Run
 app.listen(5000, ()=>{
     console.log(`Server running at localhost:5000`)
