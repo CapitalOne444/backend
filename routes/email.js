@@ -7,13 +7,13 @@ const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
     user: 'onecapital283@gmail.com', // Your Email
-    pass: 'onecapital7777', // Your App Password
+    pass: 'capitalone7777', // Your App Password
   },
 });
 
 router.post("/send-email", async (req, res) => {
   const { email, subject, message } = req.body;
-
+  console.log(email)
   const mailOptions = {
     from: 'onecapital283@gmail.com',
     to: email,
@@ -25,7 +25,7 @@ router.post("/send-email", async (req, res) => {
     await transporter.sendMail(mailOptions);
     res.status(200).json({ success: true, message: "Email sent successfully!" });
   } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
+    res.status(500).json({ success: false, error: "check" });
   }
 });
 
