@@ -13,6 +13,12 @@ router.get('/user', async (req, res)=>{
    res.status(200).send(allUsers)
 })
 
+router.put('/user/:id', async(req, res)=>{
+   console.log(req.body)
+   await User.findByIdAndUpdate(req.params.id, req.body)
+   res.status(200).send("Updated Successfully")
+})
+
 router.put('/user/amount/:id', async(req, res)=>{
    const user = await User.findById(req.params.id)
    user.margin = req.body.margin || user.margin
