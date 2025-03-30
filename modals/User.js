@@ -18,7 +18,12 @@ const UserSchema = new mongoose.Schema({
     bankInfo: Object,
     nominee: Object,
     margin: Number,
-    profilePhoto: String
+    profilePhoto: String,
+    status: {
+        default : "Pending",
+        type: String
+    },
+  requestedAt: { type: Date, default: Date.now }
 })
 
 module.exports = mongoose.model("User", UserSchema)
