@@ -13,10 +13,28 @@ router.get('/user', async (req, res)=>{
    res.status(200).send(allUsers)
 })
 
-router.put('/user/:id', async(req, res)=>{
-   console.log(req.body)
-   await User.findByIdAndUpdate(req.params.id, req.body)
-   res.status(200).send("Updated Successfully")
+router.put('/user', async(req, res)=>{
+   try {
+      const { email, ...updateData } = req.body; // Extract email separately
+  
+      if (!email) {
+        return res.status(400).json({ error: "Email is required" });
+      }
+  
+      const updatedUser = await User.findOneAndUpdate(
+        { email }, // Find user by email
+        { $set: updateData }, // Update only the provided fields
+        { new: true, runValidators: true }
+      );
+  
+      if (!updatedUser) {
+        return res.status(404).json({ error: "User not found" });
+      }
+  
+      res.status(200).json({ message: "User updated successfully", updatedUser });
+    } catch (error) {
+      res.status(500).json({ error: "Internal server error", details: error.message });
+    }
 })
 
 router.put('/user/amount/:id', async(req, res)=>{
