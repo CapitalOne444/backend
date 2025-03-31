@@ -9,7 +9,7 @@ const TradeSchema = new mongoose.Schema({
     averagePrice:Number,
     investmentAmount: Number,
     type: String,
-    created_at : Date.now,
+    created_at : { type: Date, default: Date.now },
     status: {
         type: String,
         default: "Pending"
