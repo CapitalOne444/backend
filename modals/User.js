@@ -9,7 +9,10 @@ const UserSchema = new mongoose.Schema({
     gender: String,
     occupation: String,
     address: Object,
-    email: String,
+    email: {
+      type : String,
+      unique: true
+    },
     mobileNo: Object,
     adharCardNo: Number,
     panCardNo: String,
