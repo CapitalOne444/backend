@@ -36,6 +36,10 @@ router.put('/user', async(req, res)=>{
       res.status(500).json({ error: "Internal server error", details: error.message });
     }
 })
+router.put('/user/:id', async(req, res)=>{
+   const user = await User.findByIdAndUpdate(req.params.id, req.body)
+   res.status(200).send("User Updated Successfully")
+})
 
 router.put('/user/amount/:id', async(req, res)=>{
    const user = await User.findById(req.params.id)
