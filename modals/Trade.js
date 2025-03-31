@@ -14,7 +14,7 @@ const TradeSchema = new mongoose.Schema({
         type: String,
         default: "Pending"
     },
-    updated_at : Date.now
+    updated_at : { type: Date, default: Date.now }
 })
 
 module.exports = mongoose.model("Trade", TradeSchema)
