@@ -19,7 +19,10 @@ const UserSchema = new mongoose.Schema({
     updateAt: Date,
     bankInfo: Object,
     nominee: Object,
-    margin: Number,
+    margin: {
+        default: 0,
+        type: Number
+    },
     profilePhoto: String,
     status: {
         default : "Pending",
