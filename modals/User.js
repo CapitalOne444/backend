@@ -12,7 +12,7 @@ const UserSchema = new mongoose.Schema({
       type : String,
       unique: true
     },
-    mobileNo: Object,
+    phone: Number,
     adharCardNo: Number,
     panCardNo: String,
     joinedAt: Date,
