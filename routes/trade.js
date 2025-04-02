@@ -5,7 +5,11 @@ const router = express.Router()
 router.put("/trade/:tradeId", async (req, res) => {
     try {
         const { tradeId } = req.params;
-        const { type, price, quantity } = req.body;
+        const { averagePrice, 
+            type,
+            status,
+            investmentAmount, 
+            quantity } = req.body;
 
         const trade = await Trade.findOne({ tradeId });
 
@@ -13,10 +17,12 @@ router.put("/trade/:tradeId", async (req, res) => {
 
         const newTrade = {
             _id: new mongoose.Types.ObjectId(),
+            averagePrice, 
             type,
-            price,
+            status,
+            investmentAmount, 
             quantity,
-            timestamp: new Date(),
+            created_at: new Date(),
         };
 
         trade.tradeList.push(newTrade);
