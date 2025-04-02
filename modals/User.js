@@ -24,6 +24,9 @@ const UserSchema = new mongoose.Schema({
         type: Number
     },
     profilePhoto: String,
+    panPhoto: String,
+    aadharPhoto:String,
+    bankStatement:String,
     status: {
         default : "Pending",
         type: String
