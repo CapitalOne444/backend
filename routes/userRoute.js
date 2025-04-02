@@ -1,6 +1,7 @@
 const express = require("express")
 const User = require("../modals/User")
 const router = express.Router()
+const { getUserTransactions } = require('../controllers/transactionController');
 
 router.post('/user', (req, res)=>{
    const newUser = new User(req.body)
@@ -12,6 +13,8 @@ router.get('/user', async (req, res)=>{
    const allUsers = await User.find()
    res.status(200).send(allUsers)
 })
+
+router.get('/user/:userId', getUserTransactions);
 
 router.put('/user', async(req, res)=>{
    try {
