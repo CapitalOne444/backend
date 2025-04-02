@@ -16,14 +16,7 @@ const TradeSchema = new mongoose.Schema({
     indexes: String,
     stockName: String,
     option: String,
-    mainTrade: {
-        averagePrice: Number, 
-        type:String,
-        status: String,
-        investmentAmount: Number, 
-        quantity: Number,
-        created_at: { type: Date, default: Date.now }
-    },
+    mainTrade: Object,
     tradeList: [TradeItemSchema]  // Array of trade objects with unique ID    
    
    
