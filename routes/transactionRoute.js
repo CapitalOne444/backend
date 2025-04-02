@@ -9,7 +9,7 @@ router.post('/transaction',async (req, res)=>{
 })
 
 router.get('/transaction', async (req, res)=>{
-   const alltransactions = await Transaction.find()
+   const alltransactions = await Transaction.find().populate('userId', 'name');
    res.status(200).send(alltransactions)
 })
 
