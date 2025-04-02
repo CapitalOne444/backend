@@ -19,20 +19,6 @@ router.put('/trade/:id', async(req, res)=>{
    res.status(200).send("Updated Successfully")
 })
 
-router.put('/trade/amount/:id', async(req, res)=>{
-   const trade = await Trade.findById(req.params.id)
-   trade.margin = req.body.margin || trade.margin
-   await trade.save()
-   res.status(200).send("Amount Updated Successfully")
-})
-
-router.put('/trade/password/:id', async(req, res)=>{
-   const trade = await Trade.findById(req.params.id)
-   trade.password = req.body.password || trade.password
-   await trade.save()
-   res.status(200).send("Amount Updated Successfully")
-})
-
 
 
 module.exports = router
