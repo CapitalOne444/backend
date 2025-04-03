@@ -61,7 +61,7 @@ router.put("/trade/add/:id", async (req, res) => {
             return res.status(404).json({ message: "User not found!" });
         }
         console.log(user.margin)
-        user.margin -= newTrade.investmentAmount;
+        user.margin = newTrade.type == "buy" ? user.margin - newTrade.investmentAmount : user.margin;
         console.log(user.margin, newTrade.investmentAmount)
         await user.save();
 
@@ -92,6 +92,10 @@ router.put("/trade/:id/update/:subTradeId", async (req, res) => {
         subTrade.status = status;
         subTrade.updated_at = new Date();
 
+        const user = User.findById(trade.userId)
+        user.margin = status == "Approved" && subTrade.type == "exit" ? user.margin + subTrade.investmentAmount : user.margin
+
+        await user.save()
         // ✅ 4. Save Trade
         await trade.save();
 
