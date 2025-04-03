@@ -4,19 +4,18 @@ const User = require("../modals/User")
 
 const router = express.Router()
 
-router.put("/trade/add/:tradeId", async (req, res) => {
+router.put("/trade/add/:id", async (req, res) => {
     
     try {
-        const { tradeId } = req.params;
-        console.log(tradeId)
+        
         const { averagePrice,
             type,
             status,
             investmentAmount,
             quantity } = req.body;
-
-        const trade = await Trade.findOne({ tradeId });
-
+            
+        const trade = await Trade.findById(req.params.id);
+        console.log(trade, req.body)    
         if (!trade) return res.status(404).json({ message: "Trade not found" });
 
         const newTrade = {
