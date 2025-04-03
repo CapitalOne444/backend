@@ -5,12 +5,14 @@ const User = require("../modals/User")
 const router = express.Router()
 
 router.put("/trade/add/:tradeId", async (req, res) => {
+    
     try {
         const { tradeId } = req.params;
-        const { averagePrice, 
+        console.log(tradeId)
+        const { averagePrice,
             type,
             status,
-            investmentAmount, 
+            investmentAmount,
             quantity } = req.body;
 
         const trade = await Trade.findOne({ tradeId });
@@ -19,10 +21,10 @@ router.put("/trade/add/:tradeId", async (req, res) => {
 
         const newTrade = {
             _id: new mongoose.Types.ObjectId(),
-            averagePrice, 
+            averagePrice,
             type,
             status,
-            investmentAmount, 
+            investmentAmount,
             quantity,
             created_at: new Date(),
         };
@@ -37,11 +39,11 @@ router.put("/trade/add/:tradeId", async (req, res) => {
 });
 
 
-router.post('/trade', async(req, res)=>{
-   const newTrade = new Trade(req.body)
-   newTrade.save()
+router.post('/trade', async (req, res) => {
+    const newTrade = new Trade(req.body)
+    newTrade.save()
 
-   const user = await User.findById(newTrade.userId);
+    const user = await User.findById(newTrade.userId);
     if (!user) {
         return res.status(404).json({ message: "User not found!" });
     }
@@ -52,15 +54,15 @@ router.post('/trade', async(req, res)=>{
     res.send("Trade Created Successfully!")
 })
 
-router.get('/trade', async (req, res)=>{
-   const allTrades = await Trade.find()
-   res.status(200).send(allTrades)
+router.get('/trade', async (req, res) => {
+    const allTrades = await Trade.find()
+    res.status(200).send(allTrades)
 })
 
-router.put('/trade/:id', async(req, res)=>{
-   console.log(req.body)
-   await Trade.findByIdAndUpdate(req.params.id, req.body)
-   res.status(200).send("Updated Successfully")
+router.put('/trade/:id', async (req, res) => {
+    console.log(req.body)
+    await Trade.findByIdAndUpdate(req.params.id, req.body)
+    res.status(200).send("Updated Successfully")
 })
 
 
