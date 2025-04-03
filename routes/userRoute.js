@@ -16,6 +16,7 @@ router.get('/user', async (req, res)=>{
 
 router.get('/user/:userId', getUserTransactions);
 
+
 router.put('/user', async(req, res)=>{
    try {
       const { email, ...updateData } = req.body; // Extract email separately

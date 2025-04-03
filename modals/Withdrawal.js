@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const WithdarwalSchema = new mongoose.Schema({
-    userId: String,
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     amount: Number,
     mode: String,
     created_at : String,

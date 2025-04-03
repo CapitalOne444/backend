@@ -1,15 +1,21 @@
 const express = require("express")
 const Withdarwal = require('../modals/Withdrawal')
+const User = require("../modals/User")
 const router = express.Router()
 
 router.post('/withdarwal',async (req, res)=>{
    const newWithdarwal = new Withdarwal(req.body)
    await newWithdarwal.save()
+   
+   const user = await User.findById(newWithdarwal.userId)
+   user.margin -= newWithdarwal.amount
+   await user.save()
+   
    res.status(201).send("Withdarwal Created Successfully!")
 })
 
 router.get('/withdarwal', async (req, res)=>{
-   const allwithdarwals = await Withdarwal.find()
+   const allwithdarwals = await Withdarwal.find().find().populate('userId', 'name')
    res.status(200).send(allwithdarwals)
 })
 
