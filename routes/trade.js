@@ -1,5 +1,7 @@
 const express = require("express")
 const Trade = require("../modals/Trade")
+const User = require("../modals/User")
+
 const router = express.Router()
 
 router.put("/trade/:tradeId", async (req, res) => {
@@ -35,10 +37,17 @@ router.put("/trade/:tradeId", async (req, res) => {
 });
 
 
-router.post('/trade', (req, res)=>{
+router.post('/trade', async(req, res)=>{
    const newTrade = new Trade(req.body)
    newTrade.save()
-   res.send("Trade Created Successfully!")
+
+   const user = await User.findById(newTrade.userId);
+    if (!user) {
+        return res.status(404).json({ message: "User not found!" });
+    }
+    user.margin -= newTrade.mainTrade.investmentAmount;
+    await user.save();
+    res.send("Trade Created Successfully!")
 })
 
 router.get('/trade', async (req, res)=>{
