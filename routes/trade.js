@@ -4,7 +4,7 @@ const User = require("../modals/User")
 
 const router = express.Router()
 
-router.put("/trade/:tradeId", async (req, res) => {
+router.put("/trade/add/:tradeId", async (req, res) => {
     try {
         const { tradeId } = req.params;
         const { averagePrice, 
@@ -45,7 +45,9 @@ router.post('/trade', async(req, res)=>{
     if (!user) {
         return res.status(404).json({ message: "User not found!" });
     }
+    console.log(user.margin)
     user.margin -= newTrade.mainTrade.investmentAmount;
+    console.log(user.margin, newTrade.mainTrade.investmentAmount)
     await user.save();
     res.send("Trade Created Successfully!")
 })
