@@ -4,8 +4,37 @@ const User = require("../modals/User")
 
 const router = express.Router()
 
-router.put("/trade/add/:id", async (req, res) => {
-    
+router.put("/trade/:tradeId/edit/:subTradeId", async (req, res) => {
+    try {
+        const { tradeId, subTradeId } = req.params;
+        const { quantity, averagePrice, investmentAmount, type } = req.body;
+
+        // ✅ Find Trade
+        const trade = await Trade.findById(tradeId);
+        if (!trade) return res.status(404).json({ message: "Trade not found" });
+
+        // ✅ Find Sub Trade
+        const subTrade = trade.tradeList.find(t => t._id.toString() === subTradeId);
+        if (!subTrade) return res.status(404).json({ message: "Sub Trade not found" });
+
+        // ✅ Update Fields
+        subTrade.quantity = quantity;
+        subTrade.averagePrice = averagePrice;
+        subTrade.investmentAmount = investmentAmount;
+        subTrade.type = type;
+        subTrade.updated_at = new Date();
+
+        // ✅ Save Trade
+        await trade.save();
+        res.json({ message: "Trade updated successfully", trade });
+
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+
+router.put("/trade/add/:id", async (req, res) => { 
     try {
         
         const { averagePrice,
