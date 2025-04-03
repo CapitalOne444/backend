@@ -8,12 +8,39 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-const sendEmail = async (email, subject, message) => {
+const sendEmail = async (email, subject, message, user) => {
   const mailOptions = {
     from: "onecapital283@gmail.com",
     to: email,
     subject: subject,
-    html: `<h2>Hello,</h2><p>${message}</p>`,
+    html: `<html>
+    <head>
+      <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+        .container { max-width: 600px; padding: 20px; background-color: #f4f4f4; }
+        .content { background: white; padding: 20px; border-radius: 5px; }
+        h2 { color: #d32f2f; }
+        p { margin: 10px 0; }
+        .footer { font-size: 12px; color: #888; margin-top: 20px; }
+      </style>
+    </head>
+    <body>
+      <div class="container">
+        <div class="content">
+          <h2>Dear ${user},</h2>
+          <p>Thank you for your interest in opening a <strong>FREE Demat Account</strong> with Capital One.</p>
+          <p>Your registration is currently <strong>pending</strong>. To complete your registration and start trading, please verify your email and complete the required steps.</p>
+          
+          <p>If you have any questions, feel free to contact us at <strong>capitalone283@gmail.com</strong>.</p>
+          <p>Best Regards,</p>
+          <p><strong>Capital One Support Team</strong></p>
+        </div>
+        <div class="footer">
+          <p>Disclaimer: This is an automated email. Please do not reply.</p>
+        </div>
+      </div>
+    </body>
+    </html></p>`,
   };
 
   try {

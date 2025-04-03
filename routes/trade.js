@@ -125,9 +125,9 @@ router.post('/trade', async (req, res) => {
     await user.save();
 
     const subject = "Deposit Successful - One Capital";
-    const message = `<p>Your deposit of ₹${newTrade.investmentAmount} has been successfully added to your wallet.</p>`;
+    const message = `<p>Your deposit of ₹${newTrade.mainTrade.investmentAmount} has been successfully added to your wallet.</p>`;
   
-    await sendEmail(user.email, subject, message);
+    await sendEmail(user.email, subject, message, user.name);
 
     res.send("Trade Created Successfully!")
     
