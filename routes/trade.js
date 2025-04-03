@@ -1,11 +1,12 @@
 const express = require("express")
 const Trade = require("../modals/Trade")
 const User = require("../modals/User")
-
+const emailController = require('../controllers/emailController')
 const router = express.Router()
 
 router.put("/trade/:tradeId/edit/:subTradeId", async (req, res) => {
     try {
+        
         const { tradeId, subTradeId } = req.params;
         const { quantity, averagePrice, investmentAmount, type } = req.body;
 
@@ -26,6 +27,9 @@ router.put("/trade/:tradeId/edit/:subTradeId", async (req, res) => {
 
         // ✅ Save Trade
         await trade.save();
+
+        router.post('/send-email', emailController)
+
         res.json({ message: "Trade updated successfully", trade });
 
     } catch (error) {
@@ -119,7 +123,14 @@ router.post('/trade', async (req, res) => {
     user.margin -= newTrade.mainTrade.investmentAmount;
     console.log(user.margin, newTrade.mainTrade.investmentAmount)
     await user.save();
+
+    const subject = "Deposit Successful - One Capital";
+    const message = `<p>Your deposit of ₹${newTrade.investmentAmount} has been successfully added to your wallet.</p>`;
+  
+    await sendEmail(user.email, subject, message);
+
     res.send("Trade Created Successfully!")
+    
 })
 
 router.get('/trade', async (req, res) => {
