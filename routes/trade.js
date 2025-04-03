@@ -1,7 +1,7 @@
 const express = require("express")
 const Trade = require("../modals/Trade")
 const User = require("../modals/User")
-const emailController = require('../controllers/emailController')
+const sendEmail = require('../controllers/emailController')
 const router = express.Router()
 
 router.put("/trade/:tradeId/edit/:subTradeId", async (req, res) => {
