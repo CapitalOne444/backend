@@ -55,8 +55,8 @@ router.put("/trade/add/:id", async (req, res) => {
             quantity,
             created_at: new Date(),
         };
-        trade.mainTrade.investmentAmount = type == "buy" ? trade.mainTrade.investmentAmount + newTrade.investmentAmount : trade.mainTrade.investmentAmount - newTrade.investmentAmount
-        trade.mainTrade.quantity = type == "buy" ? trade.mainTrade.quantity + newTrade.quantity : trade.mainTrade.quantity - newTrade.quantity
+        trade.mainTrade.investmentAmount = newTrade.type == "buy" ? trade.mainTrade.investmentAmount + newTrade.investmentAmount : trade.mainTrade.investmentAmount - newTrade.investmentAmount
+        trade.mainTrade.quantity = newTrade.type == "buy" ? trade.mainTrade.quantity + newTrade.quantity : trade.mainTrade.quantity - newTrade.quantity
 
         trade.tradeList.push(newTrade);
         await trade.save();
