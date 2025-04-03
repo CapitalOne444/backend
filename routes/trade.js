@@ -38,6 +38,34 @@ router.put("/trade/add/:id", async (req, res) => {
     }
 });
 
+// ✅ Approve/Reject Individual Trade Inside Trade List
+router.put("/trade/:tradeId/update/:subTradeId", async (req, res) => {
+    try {
+        const { tradeId, subTradeId } = req.params;
+        const { status } = req.body; // Status "Approved" ya "Rejected" aayega
+
+        // ✅ 1. Trade find karo
+        const trade = await Trade.findById(tradeId);
+        if (!trade) return res.status(404).json({ message: "Trade not found" });
+
+        // ✅ 2. Trade List me specific trade find karo
+        const subTrade = trade.tradeList.find(t => t._id.toString() === subTradeId);
+        if (!subTrade) return res.status(404).json({ message: "Sub Trade not found" });
+
+        // ✅ 3. Status Update karo
+        subTrade.status = status;
+        subTrade.updated_at = new Date();
+
+        // ✅ 4. Save Trade
+        await trade.save();
+
+        res.json({ message: `Trade ${status} successfully`, trade });
+
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
 
 router.post('/trade', async (req, res) => {
     const newTrade = new Trade(req.body)
