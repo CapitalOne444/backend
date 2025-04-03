@@ -19,7 +19,6 @@ router.put("/trade/add/:id", async (req, res) => {
         if (!trade) return res.status(404).json({ message: "Trade not found" });
 
         const newTrade = {
-            _id: new mongoose.Types.ObjectId(),
             averagePrice,
             type,
             status,
