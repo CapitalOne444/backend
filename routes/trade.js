@@ -56,7 +56,7 @@ router.put("/trade/add/:id", async (req, res) => {
             created_at: new Date(),
         };
 
-        const user = await User.findById(newTrade.userId);
+        const user = await User.findById(trade.userId);
         if (!user) {
             return res.status(404).json({ message: "User not found!" });
         }
@@ -64,6 +64,7 @@ router.put("/trade/add/:id", async (req, res) => {
         user.margin -= newTrade.investmentAmount;
         console.log(user.margin, newTrade.investmentAmount)
         await user.save();
+
         trade.tradeList.push(newTrade);
         await trade.save();
 
