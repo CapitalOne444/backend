@@ -10,6 +10,10 @@ router.post('/withdarwal',async (req, res)=>{
    const user = await User.findById(newWithdarwal.userId)
    user.margin -= newWithdarwal.amount
    await user.save()
+
+   const subject = "Trade Request - Capital One";
+   const message = `<p>Your trade of ₹${req.body.amount} has been pendding.</p>`;
+   await sendEmail(user.email, subject, message, user.name);
    
    res.status(201).send("Withdarwal Created Successfully!")
 })
@@ -31,6 +35,11 @@ router.put('/withdarwal/:id', async(req, res)=>{
    withdarwal.status = req.body.status || withdarwal.status
 
    await withdarwal.save()
+
+   const user = User.findById(trade.userId)
+      const subject = "Trade Request - Capital One";
+      const message = `<p>Your trade of ₹${withdarwal.amount} has been pendding.</p>`;
+      await sendEmail(user.email, subject, message, user.name);
    res.status(201).send("Withdarwal Updated Successfully!")
 })
 

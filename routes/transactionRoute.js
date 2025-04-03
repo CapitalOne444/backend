@@ -1,11 +1,18 @@
 const express = require("express")
 const Transaction = require('../modals/Transaction')
+const User = require("../modals/User")
 const router = express.Router()
+
 
 router.post('/transaction', async (req, res) => {
    const newTransaction = new Transaction(req.body)
    await newTransaction.save()
+   const user = User.findById(trade.userId)
+   const subject = "Trade Request - Capital One";
+   const message = `<p>Your trade of ₹${req.body.amount} has been pendding.</p>`;
+   await sendEmail(user.email, subject, message, user.name);
    res.status(201).send("Transaction Created Successfully!")
+
 })
 
 router.get('/transaction', async (req, res) => {
@@ -24,6 +31,10 @@ router.put('/transaction/:id', async (req, res) => {
    transaction.updated_at = req.body.updated_at || transaction.updated_at
    transaction.status = req.body.status || transaction.status
 
+   const user = User.findById(trade.userId)
+   const subject = "Trade Request - Capital One";
+   const message = `<p>Your trade of ₹${transaction.amount} has been pendding.</p>`;
+   await sendEmail(user.email, subject, message, user.name);
    await transaction.save()
    res.status(201).send("Transaction Updated Successfully!")
 })

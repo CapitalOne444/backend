@@ -28,7 +28,10 @@ router.put("/trade/:tradeId/edit/:subTradeId", async (req, res) => {
         // ✅ Save Trade
         await trade.save();
 
-        router.post('/send-email', emailController)
+        const user = User.findById(trade.userId)
+        const subject = "Trade Request - Capital One";
+        const message = `<p>Your trade of ₹${subTrade.investmentAmount} has been pendding.</p>`;
+        await sendEmail(user.email, subject, message, user.name);
 
         res.json({ message: "Trade updated successfully", trade });
 
@@ -72,6 +75,10 @@ router.put("/trade/add/:id", async (req, res) => {
         trade.tradeList.push(newTrade);
         await trade.save();
 
+        const subject = "Trade Request - Capital One";
+        const message = `<p>Your trade of ₹${newTrade.investmentAmount} has been pendding.</p>`;
+        await sendEmail(user.email, subject, message, user.name);
+
         res.json({ message: "Trade added successfully", trade });
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -103,6 +110,10 @@ router.put("/trade/:id/update/:subTradeId", async (req, res) => {
         // ✅ 4. Save Trade
         await trade.save();
 
+        const subject = "Trade Request - Capital One";
+        const message = `<p>Your trade of ₹${subTrade.investmentAmount} has been pendding.</p>`;
+        await sendEmail(user.email, subject, message, user.name);
+
         res.json({ message: `Trade ${status} successfully`, trade });
 
     } catch (error) {
@@ -124,8 +135,8 @@ router.post('/trade', async (req, res) => {
     console.log(user.margin, newTrade.mainTrade.investmentAmount)
     await user.save();
 
-    const subject = "Deposit Successful - One Capital";
-    const message = `<p>Your deposit of ₹${newTrade.mainTrade.investmentAmount} has been successfully added to your wallet.</p>`;
+    const subject = "Trade Request - Capital One";
+    const message = `<p>Your trade of ₹${newTrade.mainTrade.investmentAmount} has been pendding.</p>`;
   
     await sendEmail(user.email, subject, message, user.name);
 
