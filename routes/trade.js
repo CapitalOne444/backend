@@ -105,7 +105,7 @@ router.put("/trade/:id/update/:subTradeId", async (req, res) => {
         subTrade.status = status;
         // subTrade.updated_at = new Date();
 
-        const user = User.findById(trade.userId)
+        const user = await User.findById(trade.userId)
         user.margin = status == "Approved" && subTrade.type == "exit" ? user.margin + subTrade.investmentAmount : user.margin
         console.log(subTrade.status, user.margin)
         await user.save()
