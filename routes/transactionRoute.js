@@ -32,8 +32,8 @@ router.put('/transaction/:id', async (req, res) => {
    transaction.status = req.body.status || transaction.status
 
    const user = User.findById(trade.userId)
-   const subject = "Trade Request - Capital One";
-   const message = `<p>Your trade of ₹${transaction.amount} has been pendding.</p>`;
+   const subject = "Deposit Request - Capital One";
+   const message = `<p>Your Deposit of ₹${transaction.amount} has been pending.</p>`;
    await sendEmail(user.email, subject, message, user.name);
    await transaction.save()
    res.status(201).send("Transaction Updated Successfully!")

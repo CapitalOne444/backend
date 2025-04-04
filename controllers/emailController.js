@@ -10,6 +10,7 @@ const transporter = nodemailer.createTransport({
 
 const sendEmail = async (email, subject, message, user) => {
   const mailOptions = {
+   
     from: "onecapital283@gmail.com",
     to: email,
     subject: subject,
@@ -28,8 +29,8 @@ const sendEmail = async (email, subject, message, user) => {
       <div class="container">
         <div class="content">
           <h2>Dear ${user},</h2>
-          <p>Thank you for your interest in opening a <strong>FREE Demat Account</strong> with Capital One.</p>
-          <p>Your registration is currently <strong>pending</strong>. To complete your registration and start trading, please verify your email and complete the required steps.</p>
+
+          <p> <strong>${message}</strong></p>
           
           <p>If you have any questions, feel free to contact us at <strong>capitalone283@gmail.com</strong>.</p>
           <p>Best Regards,</p>

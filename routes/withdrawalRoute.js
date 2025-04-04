@@ -11,8 +11,8 @@ router.post('/withdarwal',async (req, res)=>{
    user.margin -= newWithdarwal.amount
    await user.save()
 
-   const subject = "Trade Request - Capital One";
-   const message = `<p>Your trade of ₹${req.body.amount} has been pendding.</p>`;
+   const subject = "Withdrawal Request - Capital One";
+   const message = `<p>Your Withdrawal of ₹${req.body.amount} has been pending.</p>`;
    await sendEmail(user.email, subject, message, user.name);
    
    res.status(201).send("Withdarwal Created Successfully!")

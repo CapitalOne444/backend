@@ -30,7 +30,7 @@ router.put("/trade/:tradeId/edit/:subTradeId", async (req, res) => {
 
         const user = User.findById(trade.userId)
         const subject = "Trade Request - Capital One";
-        const message = `<p>Your trade of ₹${subTrade.investmentAmount} has been pendding.</p>`;
+        const message = `<p>Your trade of ₹${subTrade.investmentAmount} has been pending.</p>`;
         await sendEmail(user.email, subject, message, user.name);
 
         res.json({ message: "Trade updated successfully", trade });
