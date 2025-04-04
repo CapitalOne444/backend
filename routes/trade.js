@@ -96,18 +96,18 @@ router.put("/trade/:id/update/:subTradeId", async (req, res) => {
         // ✅ 1. Trade find karo
         const trade = await Trade.findById(id);
         if (!trade) return res.status(404).json({ message: "Trade not found" });
-
+        console.log(trade)
         // ✅ 2. Trade List me specific trade find karo
         const subTrade = trade.tradeList.find(t => t._id.toString() === subTradeId);
         if (!subTrade) return res.status(404).json({ message: "Sub Trade not found" });
-
+        console.log(subTrade)
         // ✅ 3. Status Update karo
         subTrade.status = status;
         // subTrade.updated_at = new Date();
 
         const user = User.findById(trade.userId)
         user.margin = status == "Approved" && subTrade.type == "exit" ? user.margin + subTrade.investmentAmount : user.margin
-
+        console.log(user)
         await user.save()
         // ✅ 4. Save Trade
         await trade.save();
@@ -143,9 +143,7 @@ router.post('/trade', async (req, res) => {
     const message = `<p>Your trade of ₹${newTrade.mainTrade.investmentAmount} has been pendding.</p>`;
   
     await sendEmail(user.email, subject, message, user.name);
-
     res.send("Trade Created Successfully!")
-    
 })
 
 router.get('/trade', async (req, res) => {
