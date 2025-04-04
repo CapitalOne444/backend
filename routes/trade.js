@@ -92,7 +92,7 @@ router.put("/trade/:id/update/:subTradeId", async (req, res) => {
     try {
         const { id, subTradeId } = req.params;
         const { status } = req.body; // Status "Approved" ya "Rejected" aayega
-        console.log(id, subTradeId)
+        console.log(id, subTradeId, status)
         // ✅ 1. Trade find karo
         const trade = await Trade.findById(id);
         if (!trade) return res.status(404).json({ message: "Trade not found" });
@@ -103,7 +103,7 @@ router.put("/trade/:id/update/:subTradeId", async (req, res) => {
 
         // ✅ 3. Status Update karo
         subTrade.status = status;
-        subTrade.updated_at = new Date();
+        // subTrade.updated_at = new Date();
 
         const user = User.findById(trade.userId)
         user.margin = status == "Approved" && subTrade.type == "exit" ? user.margin + subTrade.investmentAmount : user.margin
