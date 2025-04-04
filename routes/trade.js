@@ -28,10 +28,10 @@ router.put("/trade/:tradeId/edit/:subTradeId", async (req, res) => {
         // ✅ Save Trade
         await trade.save();
 
-        const user = User.findById(trade.userId)
-        const subject = "Trade Request - Capital One";
-        const message = `<p>Your trade of ₹${subTrade.investmentAmount} has been pending.</p>`;
-        await sendEmail(user.email, subject, message, user.name);
+        // const user = User.findById(trade.userId)
+        // const subject = "Trade Request - Capital One";
+        // const message = `<p>Your trade of ₹${subTrade.investmentAmount} has been pending.</p>`;
+        // await sendEmail(user.email, subject, message, user.name);
 
         res.json({ message: "Trade updated successfully", trade });
 
@@ -67,7 +67,9 @@ router.put("/trade/add/:id", async (req, res) => {
         if (!user) {
             return res.status(404).json({ message: "User not found!" });
         }
-        console.log(user.margin)
+        if (user.margin < newTrade.investmentAmount && newTrade.type == "buy"){
+            return res.status(500).json({message : "You have insufficient balance"})
+        }
         user.margin = newTrade.type == "buy" ? user.margin - newTrade.investmentAmount : user.margin;
         console.log(user.margin, newTrade.investmentAmount)
         await user.save();
@@ -130,7 +132,9 @@ router.post('/trade', async (req, res) => {
     if (!user) {
         return res.status(404).json({ message: "User not found!" });
     }
-    console.log(user.margin)
+    if (user.margin < newTrade.mainTrade.investmentAmount){
+        return res.status(500).json({ message: "You have insufficient balance" });
+    }
     user.margin -= newTrade.mainTrade.investmentAmount;
     console.log(user.margin, newTrade.mainTrade.investmentAmount)
     await user.save();
