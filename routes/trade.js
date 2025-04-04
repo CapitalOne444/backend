@@ -151,10 +151,17 @@ router.get('/trade', async (req, res) => {
     res.status(200).send(allTrades)
 })
 
-router.put('/trade/:id', async (req, res) => {
+router.put('/trade/:userId', async (req, res) => {
+   
     console.log(req.body)
     await Trade.findByIdAndUpdate(req.params.id, req.body)
     res.status(200).send("Updated Successfully")
+})
+router.get('/trade/:userId', async (req, res) => {
+    const allTrades = await Trade.find()
+    const userTrades =  allTrades.filter((i)=> i.userId == req.params.id)
+    res.status(200).send(userTrades)
+   
 })
 
 
