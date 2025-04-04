@@ -32,7 +32,8 @@ router.put('/transaction/:id', async (req, res) => {
    transaction.updated_at = req.body.updated_at || transaction.updated_at
    transaction.status = req.body.status || transaction.status
 
-   const user = User.findById(transaction.userId)
+   const user = await User.findById(transaction.userId)
+   user.margin = req.body.status == "Approved" ? user.margin + transaction.amount : user.margin
    const subject = "Deposit Request - Capital One";
    const message = `<p>Your Deposit of ₹${transaction.amount} has been pending.</p>`;
    await sendEmail(user.email, subject, message, user.name);
