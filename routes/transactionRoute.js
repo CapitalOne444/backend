@@ -7,7 +7,7 @@ const router = express.Router()
 router.post('/transaction', async (req, res) => {
    const newTransaction = new Transaction(req.body)
    await newTransaction.save()
-   const user = User.findById(trade.userId)
+   const user = User.findById(newTransaction.userId)
    const subject = "Trade Request - Capital One";
    const message = `<p>Your trade of ₹${req.body.amount} has been pendding.</p>`;
    await sendEmail(user.email, subject, message, user.name);
@@ -31,7 +31,7 @@ router.put('/transaction/:id', async (req, res) => {
    transaction.updated_at = req.body.updated_at || transaction.updated_at
    transaction.status = req.body.status || transaction.status
 
-   const user = User.findById(trade.userId)
+   const user = User.findById(transaction.userId)
    const subject = "Deposit Request - Capital One";
    const message = `<p>Your Deposit of ₹${transaction.amount} has been pending.</p>`;
    await sendEmail(user.email, subject, message, user.name);
