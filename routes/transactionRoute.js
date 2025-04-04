@@ -4,11 +4,10 @@ const User = require("../modals/User")
 const router = express.Router()
 const sendEmail = require('../controllers/emailController')
 
-
 router.post('/transaction', async (req, res) => {
    const newTransaction = new Transaction(req.body)
    await newTransaction.save()
-   const user = User.findById(newTransaction.userId)
+   const user = await User.findById(newTransaction.userId)
    const subject = "Trade Request - Capital One";
    const message = `<p>Your trade of ₹${req.body.amount} has been pendding.</p>`;
    await sendEmail(user.email, subject, message, user.name);
@@ -23,7 +22,6 @@ router.get('/transaction', async (req, res) => {
 
 router.put('/transaction/:id', async (req, res) => {
    const transaction = await Transaction.findById(req.params.id)
-
    transaction.userId = req.body.userId || transaction.userId
    transaction.amount = req.body.amount || transaction.amount
    transaction.mode = req.body.mode || transaction.mode
@@ -36,6 +34,7 @@ router.put('/transaction/:id', async (req, res) => {
    user.margin = req.body.status == "Approved" ? user.margin + transaction.amount : user.margin
    const subject = "Deposit Request - Capital One";
    const message = `<p>Your Deposit of ₹${transaction.amount} has been pending.</p>`;
+   console.log(user.email)
    await sendEmail(user.email, subject, message, user.name);
    await transaction.save()
    res.status(201).send("Transaction Updated Successfully!")
